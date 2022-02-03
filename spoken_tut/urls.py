@@ -21,7 +21,8 @@ from merge import views as merge_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', merge_views.merge_home, name='merge-home')
+    path('', merge_views.merge_home, name='merge-home'),
+    path('tts/', merge_views.tts_home, name='tts-home')
 ]
 
 if settings.DEBUG:
