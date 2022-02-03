@@ -1,0 +1,28 @@
+{% extends "merge/base.html" %}
+
+{% block content %}
+
+<div class="content-section">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <label for="video" class="form-label">Video File</label>
+            <input type="file" name="video" class="form-control">
+            <br>
+            <label for="audio" class="form-label">Audio File</label>
+            <input type="file" name="audio" class="form-control">
+            <br>
+            <button class="btn btn-outline-dark" type="submit">Merge</button>
+        </fieldset>
+    </form>
+
+    {% if error %}
+    <h6 class="alert alert-danger">{{ error }}</h6>
+    {% endif %}
+
+    {% if result %}
+    <h5 class="alert alert-success">Result: <a href="{{ result }}">{{ result }}</a></h5>
+    {% endif %}
+</div>
+
+{% endblock content %}
