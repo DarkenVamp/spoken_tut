@@ -21,7 +21,12 @@
     {% endif %}
 
     {% if result %}
-    <h5 class="alert alert-success">Result: <a href="{{ result }}">{{ result }}</a></h5>
+    <h5 class="alert alert-success">Result:
+        <a href="{{ result }}">
+            <button class="btn btn-primary">Preview</button>
+        </a>
+    </h5>
+    Right Click and select "Save Link As" to Download
     {% endif %}
 </div>
 
