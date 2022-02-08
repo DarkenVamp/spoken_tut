@@ -25,6 +25,8 @@ def merge_home(request):
     except:
         return render(request, 'merge/merge_page.html', {'error': 'Incompatible media files'})
 
+    fs.delete(vid.name)
+    fs.delete(aud.name)
     return render(request, 'merge/merge_page.html', {'result': op_path})
 
 
@@ -48,4 +50,5 @@ def tts_home(request):
     except:
         return render(request, 'merge/tts_page.html', {'error': 'Invalid text format'})
 
+    fs.delete(txt_file.name)
     return render(request, 'merge/tts_page.html', {'result': audio_path})

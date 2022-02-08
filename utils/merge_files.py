@@ -22,5 +22,5 @@ def merge_aud_vid(video_name, audio_name, output_name):
         filename=output_name,
         crf=output_crf,
         vcodec=video_codec,
-        scodec='mov_text'
-    ).run()
+        scodec='mov_text',
+    ).run(overwrite_output=True)
