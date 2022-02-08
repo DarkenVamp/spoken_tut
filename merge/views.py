@@ -32,15 +32,19 @@ def tts_home(request):
     if request.method != 'POST':
         return render(request, 'merge/tts_page.html')
 
+    fs = FileSystemStorage()
+
     try:
         txt_file = request.FILES['transcript']
         gender = int(request.POST['gender'])
     except KeyError:
         return render(request, 'merge/tts_page.html', {'error': 'Missing fields'})
+
+    local_txt_name = fs.save(txt_file.name, txt_file)
     audio_path = 'media/' + txt_file.name[:-4] + '.wav'
 
     try:
-        text_to_audio_file(txt_file.name, audio_path, gender)
+        text_to_audio_file(fs.url(local_txt_name)[1:], audio_path, gender)
     except:
         return render(request, 'merge/tts_page.html', {'error': 'Invalid text format'})
 
