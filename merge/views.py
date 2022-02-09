@@ -21,12 +21,14 @@ def merge_home(request):
 
     v_name = fs.save(vid.name, vid)
     a_name = fs.save(aud.name, aud)
-    # [:-4] removes file extension (eg. '.mkv')
-    op_path = 'media/' + v_name[:-4] + '-merged.mp4'
+    # rsplit('.', maxsplit=1) gives ['filename', 'extension']
+    op_path = 'media/' + v_name.rsplit('.', maxsplit=1)[0] + '-merged.mp4'
 
+    # [1:] removes leading '/' character so relative path can be used
+    v_url = fs.url(v_name)[1:].replace('%20', ' ')
+    a_url = fs.url(a_name)[1:].replace('%20', ' ')
     try:
-        # [1:] removes leading '/' character so relative path can be used
-        merge_aud_vid(fs.url(v_name)[1:], fs.url(a_name)[1:], op_path)
+        merge_aud_vid(v_url, a_url, op_path)
     except:
         return render(request, 'merge/merge_page.html', {'error': 'Incompatible media files'})
 
@@ -49,7 +51,7 @@ def tts_home(request):
         return render(request, 'merge/tts_page.html', {'error': 'Missing fields'})
 
     local_txt_name = fs.save(txt_file.name, txt_file)
-    audio_path = 'media/' + txt_file.name[:-4] + '.wav'
+    audio_path = 'media/' + local_txt_name.rsplit('.', maxsplit=1)[0] + '.wav'
 
     try:
         text_to_audio_file(fs.url(local_txt_name)[1:], audio_path, gender)
