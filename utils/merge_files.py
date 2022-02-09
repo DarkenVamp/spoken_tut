@@ -16,11 +16,11 @@ def merge_aud_vid(video_name, audio_name, output_name):
 
     # create output
     ffmpeg.output(
-        video_stream,
-        audio_stream,
-        subs_stream,
-        filename=output_name,
-        crf=output_crf,
-        vcodec=video_codec,
-        scodec='mov_text',
+        video_stream,  # first stream
+        audio_stream,  # second stream
+        subs_stream,  # third steam
+        filename=output_name,  # output name
+        crf=output_crf,  # for compression
+        vcodec=video_codec,  # for compatibility
+        scodec='mov_text',  # mp4 supports only mov_text subtitle codec
     ).run(overwrite_output=True)

@@ -5,11 +5,14 @@ from utils.text_audio import text_to_audio_file
 
 
 def merge_home(request):
+    # to handle GET and other requests
     if request.method != 'POST':
         return render(request, 'merge/merge_page.html')
 
+    # for saving and delivering files
     fs = FileSystemStorage()
 
+    # dictionary keys taken from merge_page template
     try:
         vid = request.FILES['video']
         aud = request.FILES['audio']
@@ -18,13 +21,16 @@ def merge_home(request):
 
     v_name = fs.save(vid.name, vid)
     a_name = fs.save(aud.name, aud)
+    # [:-4] removes file extension (eg. '.mkv')
     op_path = 'media/' + v_name[:-4] + '-merged.mp4'
 
     try:
+        # [1:] removes leading '/' character so relative path can be used
         merge_aud_vid(fs.url(v_name)[1:], fs.url(a_name)[1:], op_path)
     except:
         return render(request, 'merge/merge_page.html', {'error': 'Incompatible media files'})
 
+    # delete processed files to save space
     fs.delete(vid.name)
     fs.delete(aud.name)
     return render(request, 'merge/merge_page.html', {'result': op_path})
