@@ -1,0 +1,5 @@
+pyttsx3
+Django
+ffmpeg-python
+setuptools==57.0.0
+wheel==0.36.2
