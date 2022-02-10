@@ -14,6 +14,9 @@ Personal preference. I find function based views more clear and verbose in what 
 **Why pyttsx3?**  
 Other options were gTTS which did not have male/female voice options, and Google Cloud TTS / IBM Watson, neither of which are easily accessible (require banking information). So this module became the go to choice.
 
+## Wireframe
+![Wireframe](wireframe.png)
+
 ## Instructions
 
 ### Pre-requisites
