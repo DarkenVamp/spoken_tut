@@ -44,6 +44,10 @@ Run using
 ### Open in browser
 Visit [localhost](http://localhost:8000).
 
+## Screenshots
+![ScreenShot1](ss1.PNG)
+![ScreenShot2](ss2.PNG)
+
 ## How to use?
 - Default page is the merge portal, upload valid video and audio files.
 - It should give a Preview button after clicking merge, if something went wrong either ffmpeg is not in path or uploaded files are invalid.
