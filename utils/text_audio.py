@@ -6,14 +6,15 @@ def text_to_audio_file(src_text: str, dst_file: str, gender: int) -> None:
 
     # change voice and rate
     voices = engine.getProperty('voices')
+    # gender is either 0 or 1, 0-male and 1-female
     engine.setProperty('voice', voices[gender].id)
+    # default speed is 200 which is too fast so slow it down
     engine.setProperty('rate', 110)
 
-    # TODO: take in iobytes directly
+    # read file contents
     with open(src_text, 'r') as f:
         text = f.read()
 
-    # TODO: use iobytes instead of file
     # save to file
     engine.save_to_file(text, dst_file)
     engine.runAndWait()

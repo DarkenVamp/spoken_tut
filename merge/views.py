@@ -43,17 +43,19 @@ def merge_home(request):
 
 
 def tts_home(request):
+    # for handling GET and other requests
     if request.method != 'POST':
         return render(request, 'merge/tts_page.html')
 
     fs = FileSystemStorage()
 
     try:
-        txt_file = request.FILES['transcript']
-        gender = int(request.POST['gender'])
+        txt_file = request.FILES['transcript']  # from file input
+        gender = int(request.POST['gender'])  # from radio input, gives 0 or 1
     except KeyError:
         return render(request, 'merge/tts_page.html', {'error': 'Missing fields'})
 
+    # save() also creates media directory so avoids FileNotFound
     fs.save(txt_file.name, txt_file)
     txt_path = os.path.join(MEDIA_ROOT, txt_file.name)
     audio_url = MEDIA_URL + txt_file.name.rsplit('.', maxsplit=1)[0] + '.wav'
@@ -63,5 +65,6 @@ def tts_home(request):
     except:
         return render(request, 'merge/tts_page.html', {'error': 'Invalid text format'})
 
+    # nuke file after processing
     fs.delete(txt_file.name)
     return render(request, 'merge/tts_page.html', {'result': audio_url})

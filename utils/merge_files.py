@@ -1,7 +1,7 @@
 import ffmpeg
 
 
-def merge_aud_vid(video_name, audio_name, output_name):
+def merge_aud_vid(video_name: str, audio_name: str, output_name: str) -> None:
     # get file streams
     video_stream = ffmpeg.input(video_name)
     audio_stream = ffmpeg.input(audio_name)
