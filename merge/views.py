@@ -33,13 +33,15 @@ def merge_home(request):
     a_path = os.path.join(MEDIA_ROOT, aud.name)
     try:
         merge_aud_vid(v_path, a_path, op_url)
-    except:
-        return render(request, 'merge/merge_page.html', {'error': 'Incompatible media files'})
+        context = {'result': op_url}
+    except Exception as e:
+        context = {'error': e}
+    finally:
+        # delete files to save space
+        fs.delete(vid.name)
+        fs.delete(aud.name)
 
-    # delete processed files to save space
-    fs.delete(vid.name)
-    fs.delete(aud.name)
-    return render(request, 'merge/merge_page.html', {'result': op_url})
+    return render(request, 'merge/merge_page.html', context=context)
 
 
 def tts_home(request):
@@ -62,9 +64,11 @@ def tts_home(request):
 
     try:
         text_to_audio_file(txt_path, audio_url, gender)
-    except:
-        return render(request, 'merge/tts_page.html', {'error': 'Invalid text format'})
+        context = {'result': audio_url}
+    except Exception as e:
+        context = {'error': e}
+    finally:
+        # nuke file
+        fs.delete(txt_file.name)
 
-    # nuke file after processing
-    fs.delete(txt_file.name)
-    return render(request, 'merge/tts_page.html', {'result': audio_url})
+    return render(request, 'merge/tts_page.html', context=context)
