@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from utils.merge_files import merge_aud_vid
-from utils.text_audio import text_to_audio_file
+from utils.text_audio import generate_audio
 from spoken_tut.settings import MEDIA_ROOT, MEDIA_URL
 import os
 
@@ -52,23 +52,23 @@ def tts_home(request):
     fs = FileSystemStorage()
 
     try:
-        txt_file = request.FILES['transcript']  # from file input
+        csv_file = request.FILES['transcript']  # from file input
         gender = int(request.POST['gender'])  # from radio input, gives 0 or 1
     except KeyError:
         return render(request, 'merge/tts_page.html', {'error': 'Missing fields'})
 
     # save() also creates media directory so avoids FileNotFound
-    fs.save(txt_file.name, txt_file)
-    txt_path = os.path.join(MEDIA_ROOT, txt_file.name)
-    audio_url = MEDIA_URL + txt_file.name.rsplit('.', maxsplit=1)[0] + '.wav'
+    fs.save(csv_file.name, csv_file)
+    csv_path = os.path.join(MEDIA_ROOT, csv_file.name)
+    audio_url = MEDIA_URL + csv_file.name.rsplit('.', maxsplit=1)[0]
 
     try:
-        text_to_audio_file(txt_path, audio_url, gender)
-        context = {'result': audio_url}
+        generate_audio(csv_path, audio_url, gender)
+        context = {'result': audio_url + '.wav'}
     except Exception as e:
         context = {'error': e}
     finally:
         # nuke file
-        fs.delete(txt_file.name)
+        fs.delete(csv_file.name)
 
     return render(request, 'merge/tts_page.html', context=context)
