@@ -54,6 +54,8 @@ def tts_home(request):
     try:
         csv_file = request.FILES['transcript']  # from file input
         gender = int(request.POST['gender'])  # from radio input, gives 0 or 1
+        # from text input, default is 200, default value is '' so set it to 200
+        rate = int(request.POST['rate'] or 200)
     except KeyError:
         return render(request, 'merge/tts_page.html', {'error': 'Missing fields'})
 
@@ -63,7 +65,7 @@ def tts_home(request):
     audio_url = MEDIA_URL + csv_file.name.rsplit('.', maxsplit=1)[0]
 
     try:
-        generate_audio(csv_path, audio_url, gender)
+        generate_audio(csv_path, audio_url, gender, rate)
         context = {'result': audio_url + '.wav'}
     except Exception as e:
         context = {'error': e}

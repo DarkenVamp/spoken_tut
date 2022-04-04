@@ -8,7 +8,7 @@ import os
 def get_narrations(src_filename: str) -> list[list]:
     # open csv and return list of [time, text]
     with open(src_filename, newline='') as f:
-        reader = csv.reader(f, delimiter='\t')
+        reader = csv.reader(f, delimiter=',')
         data = list(reader)
 
     # convert "M:SS" to integer seconds
@@ -23,7 +23,7 @@ def get_narrations(src_filename: str) -> list[list]:
     return data
 
 
-def text_to_audio_file(src_text: list, dst_file: str, gender: int) -> None:
+def text_to_audio_file(src_text: list, dst_file: str, gender: int, rate: int) -> None:
     engine = pyttsx3.init()
 
     # change voice and rate
@@ -31,7 +31,7 @@ def text_to_audio_file(src_text: list, dst_file: str, gender: int) -> None:
     # gender is either 0 or 1, 0-male and 1-female
     engine.setProperty('voice', voices[gender].id)
     # default speed is 200 which is too fast so slow it down
-    engine.setProperty('rate', 110)
+    engine.setProperty('rate', rate)
 
     # save to file
     for i, txt in enumerate(src_text):
@@ -77,12 +77,12 @@ def concat_all(prefix: str, n: int) -> None:
         os.remove(file)
 
 
-def generate_audio(csv_file: str, dst_name: str, gender: int) -> None:
+def generate_audio(csv_file: str, dst_name: str, gender: int, rate: int) -> None:
     # separate out times and texts
     narrations = get_narrations(csv_file)
     times, text = zip(*narrations)
 
-    text_to_audio_file(text, dst_name, gender)
+    text_to_audio_file(text, dst_name, gender, rate)
 
     # to calculate padding length, next_start and current audio length are needed
     for i, next_start in enumerate(times[1:]):
