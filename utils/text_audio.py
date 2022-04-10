@@ -1,26 +1,28 @@
 import pyttsx3
 import ffmpeg
 from mutagen.wave import WAVE
-import csv
 import os
+import pandas as pd
 
 
 def get_narrations(src_filename: str) -> list[list]:
-    # open csv and return list of [time, text]
-    with open(src_filename, newline='') as f:
-        reader = csv.reader(f, delimiter=',')
-        data = list(reader)
+    # open csv and extract times and texts
+    df = pd.read_csv(src_filename)
+    times, text = df.get('Times'), df.get('Text')
+
+    if times is None:
+        return (None, text)
 
     # convert "M:SS" to integer seconds
-    for row in data:
-        mins, secs = row[0].split(':')
-        row[0] = int(mins)*60 + int(secs)
+    for i, time in enumerate(times):
+        mins, secs = time.split(':')
+        times[i] = int(mins)*60 + int(secs)
 
     # rather than timestamps, keep adjacent differences for easier processing
-    for i in range(len(data)-1, 0, -1):
-        data[i][0] -= data[i-1][0]
+    for i in range(len(times)-1, 0, -1):
+        times[i] -= times[i-1]
 
-    return data
+    return (times, text)
 
 
 def text_to_audio_file(src_text: list, dst_file: str, gender: int, rate: int) -> None:
@@ -79,15 +81,15 @@ def concat_all(prefix: str, n: int) -> None:
 
 def generate_audio(csv_file: str, dst_name: str, gender: int, rate: int) -> None:
     # separate out times and texts
-    narrations = get_narrations(csv_file)
-    times, text = zip(*narrations)
+    times, text = get_narrations(csv_file)
 
     text_to_audio_file(text, dst_name, gender, rate)
 
     # to calculate padding length, next_start and current audio length are needed
-    for i, next_start in enumerate(times[1:]):
-        f_path = f'{dst_name}-{str(i).zfill(3)}.wav'
-        len_seconds = get_audio_length(f_path)
-        add_silence(f_path, max(next_start - len_seconds, 0))
+    if times is not None:
+        for i, next_start in enumerate(times[1:]):
+            f_path = f'{dst_name}-{str(i).zfill(3)}.wav'
+            len_seconds = get_audio_length(f_path)
+            add_silence(f_path, max(next_start - len_seconds, 0))
 
-    concat_all(dst_name, len(times))
+    concat_all(dst_name, len(text))
