@@ -11,7 +11,7 @@ RUN apt-get update && \
     apt-get install -y \
     libpq-dev \
     python3-dev \
-    espeak \
+    espeak-ng \
     ffmpeg \
     mbrola \
     mbrola-us1 \
@@ -20,6 +20,8 @@ RUN apt-get update && \
     python3-pip && \
     apt-get clean
 
+ENV PATH "$PATH:$HOME/.local/bin"
+
 COPY ./requirements.txt .
 RUN pip3 install -r requirements.txt
 
@@ -27,4 +29,4 @@ COPY . .
 
 RUN python3 manage.py collectstatic --noinput
 
-CMD gunicorn spoken_tut.wsgi:application --bind 0.0.0.0:8765
+CMD gunicorn spoken_tut.wsgi:application --bind 0.0.0.0:$PORT

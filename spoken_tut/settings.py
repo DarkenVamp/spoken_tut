@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-_$g)+50o32lw+06sa%3&24n2t#j%gil294yxzl&guardt*3d%x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['spokentut.herokuapp.com', 'https://spokentut.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['spokentut.herokuapp.com',
+                        'https://spokentut.herokuapp.com']
 
 
 # Application definition

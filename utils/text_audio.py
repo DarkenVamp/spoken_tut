@@ -1,11 +1,12 @@
-import pyttsx3
+# import pyttsx3
 import ffmpeg
 from mutagen.wave import WAVE
 import os
 import pandas as pd
+import subprocess
 
 
-def get_narrations(src_filename: str) -> list[list]:
+def get_narrations(src_filename: str) -> tuple:
     # open csv and extract times and texts
     df = pd.read_csv(src_filename)
     times, text = df.get('Times'), df.get('Text')
@@ -26,21 +27,10 @@ def get_narrations(src_filename: str) -> list[list]:
 
 
 def text_to_audio_file(src_text: list, dst_file: str, gender: int, rate: int) -> None:
-    engine = pyttsx3.init()
-
-    # change voice and rate
-    voices = engine.getProperty('voices')
-    # linux doesn't have gender so choose default english accent
-    engine.setProperty('voice', f'mb-us{gender}')
-    # default speed is 200 which is too fast so slow it down
-    engine.setProperty('rate', rate)
-
     # save to file
     for i, txt in enumerate(src_text):
-        engine.save_to_file(txt, f'{dst_file}-{str(i).zfill(3)}.wav')
-    engine.runAndWait()
-
-    engine.stop()
+        subprocess.call(['espeak-ng', txt, '-s', str(rate), '-v', f'mb-us{gender}',
+                         '-w', f'{dst_file}-{str(i).zfill(3)}.wav'])
 
 
 def add_silence(file_path: str, duration: int) -> None:
