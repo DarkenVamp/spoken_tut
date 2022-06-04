@@ -78,6 +78,6 @@ def generate_audio(csv_file: str, dst_name: str, gender: int, rate: int) -> None
         for i, next_start in enumerate(times[1:]):
             f_path = f'{dst_name}-{str(i).zfill(3)}.wav'
             len_seconds = get_audio_length(f_path)
-            add_silence(f_path, max(next_start - len_seconds, 0))
+            add_silence(f_path, max(next_start - len_seconds, 0.1))
 
     concat_all(dst_name, len(text))
