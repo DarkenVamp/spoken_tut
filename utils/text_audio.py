@@ -4,11 +4,21 @@ from mutagen.wave import WAVE
 import os
 import pandas as pd
 
+DF_HEADINGS = ['Text', 'Narration']
+
 
 def get_narrations(src_filename: str) -> list[list]:
     # open csv and extract times and texts
     df = pd.read_csv(src_filename)
-    times, text = df.get('Times'), df.get('Text')
+    times = df.get('Times')
+    text = None
+
+    for heading in DF_HEADINGS:
+        if heading in df:
+            text = df[heading]
+
+    if text is None:
+        raise Exception("No valid column heading found for narrations")
 
     if times is None:
         return (None, text)
