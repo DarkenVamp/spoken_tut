@@ -18,9 +18,6 @@ def merge_home(request):
     try:
         vid = request.FILES['video']
         csv_file = request.FILES['transcript']  # from file input
-        gender = int(request.POST['gender'])  # from radio input, gives 0 or 1
-        # from text input, default is 145, default value is '' so set it to 145
-        rate = int(request.POST['rate'] or 145)
     except KeyError:
         return render(request, 'merge/merge_page.html', {'error': 'Missing fields'})
 
@@ -35,11 +32,11 @@ def merge_home(request):
     csv_path = os.path.join(MEDIA_ROOT, csv_file.name)
     audio_url = MEDIA_URL + csv_file.name.rsplit('.', maxsplit=1)[0]
     v_path = os.path.join(MEDIA_ROOT, vid.name)
-    a_path = audio_url + '.wav'
+    a_path = audio_url + '.mp3'
 
     try:
         # generate audio
-        generate_audio(csv_path, audio_url, gender, rate)
+        generate_audio(csv_path, audio_url)
         # merge video with generated audio
         merge_aud_vid(v_path, a_path, op_url)
         # delete generated audio after processing

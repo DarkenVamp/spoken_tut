@@ -1,8 +1,8 @@
 import ffmpeg
-from mutagen.wave import WAVE
+from mutagen.mp3 import MP3
 import os
 import pandas as pd
-import subprocess
+from gtts import gTTS
 
 
 def get_narrations(src_filename: str) -> tuple:
@@ -25,11 +25,12 @@ def get_narrations(src_filename: str) -> tuple:
     return (times, text)
 
 
-def text_to_audio_file(src_text: list, dst_file: str, gender: int, rate: int) -> None:
+def text_to_audio_file(src_text: list, dst_file: str) -> None:
     # save to file
     for i, txt in enumerate(src_text):
-        subprocess.call(['espeak-ng', txt, '-s', str(rate), '-v', f'mb-us{gender}',
-                         '-w', f'{dst_file}-{str(i).zfill(3)}.wav'])
+        aud = gTTS(text=txt, lang='en', slow=False, tld='co.in')
+        aud.save(f'{dst_file}-{str(i).zfill(3)}.mp3')
+
 
 def add_silence(file_path: str, duration: int) -> None:
     # apad filter adds silence at end of stream of given duration
@@ -39,7 +40,7 @@ def add_silence(file_path: str, duration: int) -> None:
     filtered_stream = inp_stream.filter_("apad", pad_dur=duration)
 
     # use separate output name as ffmpeg can't edit file in-place
-    output_file = f'{file_path[:-4]}-padded.wav'
+    output_file = f'{file_path[:-4]}-padded.mp3'
     filtered_stream.output(output_file).run(overwrite_output=True)
 
     # replaced original with padded file
@@ -47,12 +48,12 @@ def add_silence(file_path: str, duration: int) -> None:
 
 
 def get_audio_length(file_path: str) -> int:
-    return WAVE(file_path).info.length
+    return MP3(file_path).info.length
 
 
 def concat_all(prefix: str, n: int) -> None:
     # generate array of filenames
-    f_names = [f'{prefix}-{str(i).zfill(3)}.wav' for i in range(n)]
+    f_names = [f'{prefix}-{str(i).zfill(3)}.mp3' for i in range(n)]
 
     # inp array contains list of ffmpeg audio streams
     inp = list(map(lambda x: ffmpeg.input(x).audio, f_names))
@@ -60,23 +61,23 @@ def concat_all(prefix: str, n: int) -> None:
     # concat using star unpacking
     # v=0 -> no video; a=1 -> single audio output stream
     concat_stream = ffmpeg.concat(*inp, v=0, a=1)
-    concat_stream.output(prefix + '.wav').run(overwrite_output=True)
+    concat_stream.output(prefix + '.mp3').run(overwrite_output=True)
 
     # remove individual parts for clean up
     for file in f_names:
         os.remove(file)
 
 
-def generate_audio(csv_file: str, dst_name: str, gender: int, rate: int) -> None:
+def generate_audio(csv_file: str, dst_name: str) -> None:
     # separate out times and texts
     times, text = get_narrations(csv_file)
 
-    text_to_audio_file(text, dst_name, gender, rate)
+    text_to_audio_file(text, dst_name)
 
     # to calculate padding length, next_start and current audio length are needed
     if times is not None:
         for i, next_start in enumerate(times[1:]):
-            f_path = f'{dst_name}-{str(i).zfill(3)}.wav'
+            f_path = f'{dst_name}-{str(i).zfill(3)}.mp3'
             len_seconds = get_audio_length(f_path)
             add_silence(f_path, max(next_start - len_seconds, 0.1))
 

@@ -3,10 +3,12 @@
 ## Motivation
 Built for the [screening phase](https://spoken-tutorial.org/stinternship2022/autogeneration/) of the FOSSEE program under Python.
 
+## This branch uses gTTS as a test
+
 ## Technologies/Frameworks Used
 - [ffmpeg-python](https://kkroening.github.io/ffmpeg-python/)
 - [Django](https://www.djangoproject.com/)
-- [pyttsx3](https://github.com/nateshmbhat/pyttsx3)
+- [gtts](https://gtts.readthedocs.io)
 
 **Why function based views instead of class based views?**  
 Personal preference. I find function based views more clear and verbose in what they do as compared to class based (magic) views.

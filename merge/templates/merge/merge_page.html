@@ -12,7 +12,10 @@
             <label for="transcript" class="form-label">Transcript</label>
             <input type="file" name="transcript" class="form-control">
             <br>
-            <label for="gender" class="form-label">Gender:</label>
+
+            <!-- gTTS does not support gender and rate -->
+
+            <!-- <label for="gender" class="form-label">Gender:</label>
             <div class="form-check">
                 <input type="radio" id="male" name="gender" class="form-check-input" value="2">
                 <label for="male" class="form-check-label">Male</label>
@@ -21,11 +24,12 @@
                 <input type="radio" id="female" name="gender" class="form-check-input" value="1">
                 <label for="female" class="form-check-label">Female</label>
             </div>
-            <br>
-            <div class="input-group mb-3">
+            <br> -->
+            <!-- <div class="input-group mb-3">
                 <span class="input-group-text">Rate/Tempo:</span>
                 <input type="text" name="rate" class="form-control" placeholder="145 (higher = faster)">
-            </div>
+            </div> -->
+
             <button class="btn btn-outline-dark" type="submit">Generate</button>
         </fieldset>
     </form>
