@@ -2,10 +2,19 @@
 
 {% block content %}
 
+<script>
+    function disableGenerateBtn() {
+        document.getElementById("generateBtn").disabled = true;
+        info_div = document.createElement('div');
+        info_div.innerText = 'Please wait for the files to finish processing';
+        document.getElementById("form-fieldset").appendChild(info_div);
+    }
+</script>
+
 <div class="content-section">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <fieldset class="form-group">
+        <fieldset class="form-group" id="form-fieldset">
             <label for="video" class="form-label">Video File</label>
             <input type="file" name="video" class="form-control">
             <br>
@@ -30,7 +39,8 @@
                 <input type="text" name="rate" class="form-control" placeholder="145 (higher = faster)">
             </div> -->
 
-            <button class="btn btn-outline-dark" type="submit">Generate</button>
+            <button class="btn btn-outline-dark" type="submit" id="generateBtn"
+                onclick="disableGenerateBtn()">Generate</button>
         </fieldset>
     </form>
 
