@@ -2,5 +2,4 @@ Django
 ffmpeg-python
 mutagen
 pandas
-setuptools==57.0.0
-wheel==0.36.2
+edge_tts
