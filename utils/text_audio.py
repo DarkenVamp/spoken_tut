@@ -37,12 +37,9 @@ def get_narrations(src_filename: str) -> tuple:
 
 
 async def text_to_audio_file(src_text: list, dst_file: str) -> None:
-    comm = edge_tts.Communicate()
     for i, txt in enumerate(src_text):
-        with open(f'{dst_file}-{str(i).zfill(3)}.mp3', 'wb') as f:
-            async for i in comm.run(txt):
-                if i[2] is not None:
-                    f.write(i[2])
+        comm = edge_tts.Communicate(txt, rate='-10%')
+        await comm.save(f'{dst_file}-{str(i).zfill(3)}.mp3')
 
 
 def add_silence(file_path: str, duration: int) -> None:
@@ -85,8 +82,7 @@ def generate_audio(csv_file: str, dst_name: str) -> None:
     # separate out times and texts
     times, text = get_narrations(csv_file)
 
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(text_to_audio_file(text, dst_name))
+    asyncio.new_event_loop().run_until_complete(text_to_audio_file(text, dst_name))
 
     # to calculate padding length, next_start and current audio length are needed
     if times is not None:
