@@ -1,0 +1,78 @@
+Times,Text
+0:03,Welcome to the series of Blender Tutorials.
+0:07,This tutorial is about the 3D Cursor in Blender 2.59.
+0:15,This script has been contributed by Chirag Raman and edited by Monisha Banerjee.
+0:25,"After watching this tutorial, we shall learn- what is 3D cursor?"
+0:32,How to add new objects to the 3D view in Blender using 3D cursor and the snapping options for 3D cursor in Blender.
+0:46,I assume that you already know how to install Blender on your system.
+0:51,"If not, please refer to our earlier tutorials on Installing Blender."
+0:57,The 3D Cursor is the red and white ring with the cross-hair that you see at the centre of the Blender screen.
+1:06,"Let us see the 3D cursor in Blender. To do that, we need to open Blender."
+1:12,There are two ways to open Blender.
+1:15,"First, go to the Blender icon on the desktop. Right-click the Blender icon. Left-click Open."
+1:27,The second and easier way to open Blender is left double-click the Blender icon on the desktop.
+1:42,This is Blender 2.59. Please note that the screen resolution shown here is 1024 by 768 pixels.
+1:54,The font size in the Blender interface has been increased so that you can understand all the options given.
+2:01,"To learn how to increase the Interface font size,  please see the tutorial on User Preferences."
+2:12,This is known as the welcome page or splash screen.  It shows some useful reference links for learning about Blender.
+2:20,"To remove the splash screen, press ESC on your keyboard or"
+2:25,left-click  mouse anywhere on the Blender interface other than splash screen.
+2:32,Now you can see the default Blender workspace.
+2:37,"The 3D cursor is right at the centre of the screen, surrounded by the cube."
+2:43,"We can't see the cursor properly, so we must delete the cube."
+2:48,"By default, the cube is already selected."
+2:51,"To delete it, press the Delete button on the keyboard. Left-click Delete."
+2:58,"There, you might be able to see the 3D cursor better now."
+3:04,The primary purpose of the 3D Cursor is to specify the location of a new object added to the 3D scene.
+3:15,Go to ADD >> Mesh. Left-click Cube.
+3:19,You can also use key board shortcut shift & A to add new objects to the 3D view.
+3:27,A new cube is added to the 3D view.
+3:30,"As you can see, the new cube has appeared on the same location as the 3D cursor."
+3:38,"Now, let us see how we can add a new object to a new location."
+3:44,"First, we need to move the 3D cursor to a new location."
+3:48,"To do this, left-click at any location in the 3D space."
+3:53,I am clicking to the left side of the cube.
+3:59,"Shift & A to add a new object, Mesh. Left-click UV sphere."
+4:10,The UV sphere appears at the new location of the 3D cursor.
+4:15,"Now, we shall see the snapping options for the 3D cursor."
+4:22,Go to Object. Go to Snap. This is the Snap menu.
+4:29,There are various options here.
+4:31,You can also use the keyboard shortcut Shift & S.
+4:38,Selection to cursor snaps the selected item to the 3D cursor.
+4:45,"For example, let us snap the cube to the 3D cursor."
+4:50,Right-click on the cube. Shift & S to pull up the snap menu.
+4:58,Left-click Selection to cursor. The cube snaps to the 3D cursor.
+5:06,"Now let's move the cube to the right. Left-click green handle, hold and drag your mouse to the right."
+5:17,"For keyboard shortcut, Press G&Y."
+5:23,"To learn more about moving objects in the 3D view, see the tutorial on Basic description of Blender interface."
+5:35,Shift & S to pull up the snap menu. Left-click Cursor to Selected.
+5:43,The 3D cursor snaps to the centre of the cube in the new location.
+5:50,"In case you have more than 1 object selected at the same time, say the cube and the UV sphere here,"
+5:59,Cursor to selected snaps the 3D cursor at the centre of the two objects selected.
+6:07,"Let me demonstrate. As you can see, the cube is already selected."
+6:12,"Shift plus right click to select the UV sphere. So now, you have two objects selected at the same time."
+6:22,Shift & S to pull up the snap menu. Click Cursor to selected.
+6:30,The 3D cursor snaps to the centre of the two selected objects.
+6:36,"Now, Shift plus right click the lamp. Shift & S to pull up the snap menu."
+6:47,Click Cursor to Selected. The 3D cursor snaps to the centre of the 3 selected objects.
+6:58,Click on any point in the 3D view to move the 3D cursor. I am clicking to the bottom right.
+7:07,Shift & S to pull up the snap menu.
+7:12,Click Cursor to Center. The 3D cursor snaps to the centre of the 3D view.
+7:22,Press A on the keyboard to deselect the objects.
+7:28,"Now, right-click the UV sphere. Press A to deselect it."
+7:39,Shift & S to pull up the snap menu.
+7:44,Click Cursor to active.
+7:47,"The 3D cursor snaps to the centre of the UV sphere, the last active selection."
+7:56,The 3D cursor provides additional benefits when used as a pivot point while modeling
+8:03,but we shall look at that in later tutorials.
+8:08,"Now, try to add new objects to the 3D view in different locations using the 3D cursor."
+8:16,"After that, explore the snapping options in the snap menu. All the best!"
+8:26,"So, that wraps up our tutorial on Blender's 3D Cursor."
+8:31,This tutorial is created by Project Oscar and supported by the National Mission on Education through ICT.
+8:40,More information on the same is available at the following links- oscar.iitb.ac.in and spoken-tutorial.org/NMEICT-Intro.
+9:00,The Spoken Tutorial Project
+9:02,conducts workshops using spoken tutorials;
+9:06,also gives certificates to those who pass an online test.
+9:11,"For more details, please contact contact@spoken-tutorial.org"
+9:17,Thanks for joining us.
+9:19,"And this is Monisha from IIT Bombay, signing off."
