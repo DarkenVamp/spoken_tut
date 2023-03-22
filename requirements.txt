@@ -3,5 +3,5 @@ Django
 ffmpeg-python
 mutagen
 pandas
-setuptools==57.0.0
+setuptools==65.5.1
 wheel==0.38.1
